@@ -44,7 +44,7 @@ app.post('/newrating', async (req, res) => {
        var rating = data.result[0].rating; 
 
         if (rating) {
-                console.log('Rating fetched successfully:', grab);
+                console.log('Rating fetched successfully:', rating);
                 res.json({ rating: rating });
             } else {
                 res.status(404).json({ error: 'Rating not found' });
