@@ -17,27 +17,53 @@ app.post('/newrating', async (req, res) => {
     console.log(`Fetching rating for handle: ${handle}`);
 
     try {
-        const browser = await puppeteer.launch({
-            headless: true
-        });
-        const page = await browser.newPage();
-        await page.goto(`https://codeforces.com/profile/${handle}`, { waitUntil: 'networkidle2' });
+        // const browser = await puppeteer.launch({
+        //     headless: true
+        // });
+        // const page = await browser.newPage();
+        // await page.goto(`https://codeforces.com/profile/${handle}`, { waitUntil: 'networkidle2' });
 
-        await page.waitForSelector('#pageContent > div:nth-child(3) > div > div.info > ul > li:nth-child(1) > span.user-green', { timeout: 10000 });
+        // await page.waitForSelector('#pageContent > div:nth-child(3) > div > div.info > ul > li:nth-child(1) > span.user-green', { timeout: 10000 });
         
-        const grab = await page.evaluate(() => {
-            const ratingElement = document.querySelector('#pageContent > div:nth-child(3) > div > div.info > ul > li:nth-child(1) > span.user-green');
-            return ratingElement ? ratingElement.innerText : null;
-        });
+        // const grab = await page.evaluate(() => {
+        //     const ratingElement = document.querySelector('#pageContent > div:nth-child(3) > div > div.info > ul > li:nth-child(1) > span.user-green');
+        //     return ratingElement ? ratingElement.innerText : null;
+        // });
 
-        await browser.close();
+        // await browser.close();
 
-        if (grab) {
-            console.log('Rating fetched successfully:', grab);
-            res.json({ rating: grab });
-        } else {
-            res.status(404).json({ error: 'Rating not found' });
-        }
+        // if (grab) {
+        //     console.log('Rating fetched successfully:', grab);
+        //     res.json({ rating: grab });
+        // } else {
+        //     res.status(404).json({ error: 'Rating not found' });
+        // }
+        
+       var response = await fetch(`https://codeforces.com/api/user.info?handles=${handle}`);
+       var data = await response.json();
+       var rating = console.log(data.result[0].rating); 
+
+        if (rating) {
+                console.log('Rating fetched successfully:', grab);
+                res.json({ rating: rating });
+            } else {
+                res.status(404).json({ error: 'Rating not found' });
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     } catch (error) {
         console.error('Error fetching rating:', error);
         res.status(500).json({ error: 'Failed to fetch rating' });
