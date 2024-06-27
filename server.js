@@ -41,7 +41,7 @@ app.post('/newrating', async (req, res) => {
         
        var response = await fetch(`https://codeforces.com/api/user.info?handles=${handle}`);
        var data = await response.json();
-       var rating = console.log(data.result[0].rating); 
+       var rating = data.result[0].rating; 
 
         if (rating) {
                 console.log('Rating fetched successfully:', grab);
