@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+// const http = require('http');
 const puppeteer = require('puppeteer');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -44,5 +45,5 @@ app.post('/newrating', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server running at :${port}`);
 });
